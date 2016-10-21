@@ -65,6 +65,8 @@ func (board Board) in(point Point) bool {
 func (board *Board) Move(from, to Point) error {
 	if board.in(from) == false || board.in(to) == false {
 		return errors.New("out of board")
+	} else if board.matrix[from.y][from.x] == ' ' {
+		return errors.New("cannot move empty piece")
 	}
 	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
 	board.matrix[from.y][from.x] = ' '
