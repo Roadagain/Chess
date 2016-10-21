@@ -17,7 +17,7 @@ func PrintChessboard() {
 		fmt.Println()
 		fmt.Printf("%d|", i+1)
 		for j := 0; j < 8; j++ {
-			fmt.Print(" |")
+			fmt.Printf("%c|", Piece(Point{i, j}))
 		}
 		fmt.Println(i + 1)
 	}
