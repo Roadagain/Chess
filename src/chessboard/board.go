@@ -21,6 +21,6 @@ func NewBoard() *Board {
 	return board
 }
 
-func Piece(p Point) byte {
-	return starting[p.y][p.x]
+func (board Board) Piece(p Point) byte {
+	return board.matrix[p.y][p.x]
 }
