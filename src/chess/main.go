@@ -9,7 +9,7 @@ func scanMove() (*chessboard.Move, error) {
 	var file byte
 	var rank int
 
-	_, err := fmt.Scanf("%c %d", &file, &rank)
+	_, err := fmt.Scanf("%c%d", &file, &rank)
 	return chessboard.NewMove(file, rank), err
 }
 
