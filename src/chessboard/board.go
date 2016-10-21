@@ -1,6 +1,9 @@
 package chessboard
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 var starting = [8][8]byte{
 	{'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'},
@@ -55,7 +58,16 @@ func (board *Board) Print() {
 	fmt.Println()
 }
 
-func (board *Board) Move(from, to Point) {
+func (board Board) in(point Point) bool {
+	return 0 <= point.x && point.x < 8 && 0 <= point.y && point.y < 8
+}
+
+func (board *Board) Move(from, to Point) error {
+	if board.in(from) == false || board.in(to) == false {
+		return errors.New("out of board")
+	}
 	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
 	board.matrix[from.y][from.x] = ' '
+
+	return nil
 }
