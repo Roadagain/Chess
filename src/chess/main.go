@@ -17,12 +17,22 @@ func main() {
 	board := chessboard.NewBoard()
 
 	for true {
+		var from *chessboard.Move
+		var to *chessboard.Move
+		var err error
+
 		board.Print()
-		from, err := scanMove()
+		from, err = scanMove()
 		if err != nil {
 			break
 		}
-		to, _ := scanMove()
-		board.Move(from.ToPoint(), to.ToPoint())
+		to, err = scanMove()
+		if err != nil {
+			break
+		}
+		err = board.Move(from.ToPoint(), to.ToPoint())
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
