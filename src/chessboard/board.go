@@ -23,10 +23,6 @@ func NewBoard() *Board {
 	return board
 }
 
-func (board Board) Piece(p Point) byte {
-	return board.matrix[p.y][p.x]
-}
-
 func (board Board) Print() {
 	fmt.Print(" ")
 	for i := 0; i < 8; i++ {
@@ -42,7 +38,7 @@ func (board Board) Print() {
 		fmt.Println()
 		fmt.Printf("%d|", i+1)
 		for j := 0; j < 8; j++ {
-			fmt.Printf("%c|", board.Piece(Point{i, j}))
+			fmt.Printf("%c|", board.matrix[i][j])
 		}
 		fmt.Println(i + 1)
 	}
