@@ -18,19 +18,16 @@ func main() {
 	finish := false
 
 	for finish == false {
-		var from *chessboard.Move
-		var to *chessboard.Move
-		var err error
 		success := false
 
 		board.Print()
 		for success == false {
-			from, err = scanMove()
+			from, err := scanMove()
 			if err != nil {
 				finish = true
 				break
 			}
-			to, err = scanMove()
+			to, err := scanMove()
 			if err != nil {
 				finish = true
 				break
