@@ -54,3 +54,9 @@ func (board Board) Print() {
 	}
 	fmt.Println()
 }
+
+func (board Board) Move(from, to Point) {
+	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
+	board.matrix[from.y][from.x] = ' '
+	fmt.Println(from, to)
+}
