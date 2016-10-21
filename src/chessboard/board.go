@@ -23,7 +23,7 @@ func NewBoard() *Board {
 	return board
 }
 
-func (board Board) Print() {
+func (board *Board) Print() {
 	fmt.Print(" ")
 	for i := 0; i < 8; i++ {
 		fmt.Printf(" %c", 'a'+i)
@@ -55,7 +55,7 @@ func (board Board) Print() {
 	fmt.Println()
 }
 
-func (board Board) Move(from, to Point) {
+func (board *Board) Move(from, to Point) {
 	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
 	board.matrix[from.y][from.x] = ' '
 }
