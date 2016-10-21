@@ -13,5 +13,5 @@ func NewMove(file byte, rank int) *Move {
 }
 
 func (move Move) ToPoint() Point {
-	return Point{int(move.file - 'a'), move.rank - 1}
+	return Point{int(move.file - 'a'), 8 - move.rank}
 }
