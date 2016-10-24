@@ -5,39 +5,6 @@ import (
 	"fmt"
 )
 
-type Color int
-
-const (
-	Unknown Color = iota
-	Empty
-	White
-	Black
-)
-
-func (color Color) String() string {
-	switch color {
-	case Empty:
-		return "Empty"
-	case White:
-		return "White"
-	case Black:
-		return "Black"
-	default:
-		return "Unknown"
-	}
-}
-
-func (color Color) Enemy() Color {
-	switch color {
-	case White:
-		return Black
-	case Black:
-		return White
-	default:
-		return color
-	}
-}
-
 var starting = [8][8]byte{
 	{'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'},
 	{'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
