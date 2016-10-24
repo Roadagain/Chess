@@ -71,6 +71,21 @@ func (board Board) in(point Point) bool {
 	return 0 <= point.x && point.x < 8 && 0 <= point.y && point.y < 8
 }
 
+func (board Board) color(point Point) (Color, error) {
+	if board.in(point) == false {
+		return Unknown, errors.New("out of board")
+	}
+
+	piece = board[point.y][point.x]
+	if piece == ' ' {
+		return Empty, nil
+	} else if 'A' <= piece && piece <= 'Z' {
+		return White, nil
+	} else {
+		return Black, nil
+	}
+}
+
 func (board *Board) Move(from, to Point) error {
 	if board.in(from) == false || board.in(to) == false {
 		return errors.New("out of board")
