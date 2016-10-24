@@ -106,11 +106,9 @@ func (board *Board) Move(from, to Point, color Color) error {
 		return errors.New("out of board")
 	}
 
-	fcolor := board.color(from)
-	if fcolor == Empty {
-		return errors.New("cannot move empty piece")
-	} else if fcolor != color {
-		return errors.New(fmt.Sprintf("cannnot move %+v piece", fcolor))
+	fcolor, err := board.color(from)
+	if fcolor != color || err != nil {
+		return errors.New("cannot move this piece")
 	}
 
 	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
