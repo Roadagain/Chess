@@ -84,8 +84,9 @@ func (board *Board) Move(from, to Point, color Color) error {
 		return errors.New("out of board")
 	}
 
-	fcolor, err := board.color(from)
-	if fcolor != color || err != nil {
+	fcolor, ferr := board.color(from)
+	tcolor, terr := board.color(to)
+	if fcolor != color || ferr != nil || tcolor == color || terr != nil {
 		return errors.New("cannot move this piece")
 	}
 
