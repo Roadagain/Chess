@@ -1,6 +1,6 @@
 package point
 
 type Point struct {
-	y int
-	x int
+	Y int
+	X int
 }

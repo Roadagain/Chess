@@ -59,7 +59,7 @@ func (board *Board) Print() {
 }
 
 func InBoard(point Point) bool {
-	return 0 <= point.x && point.x < 8 && 0 <= point.y && point.y < 8
+	return 0 <= point.X && point.X < 8 && 0 <= point.Y && point.Y < 8
 }
 
 func (board Board) color(point Point) (Color, error) {
@@ -67,7 +67,7 @@ func (board Board) color(point Point) (Color, error) {
 		return Unknown, errors.New("out of board")
 	}
 
-	piece := board.matrix[point.y][point.x]
+	piece := board.matrix[point.Y][point.X]
 	if piece == ' ' {
 		return Empty, nil
 	} else if 'A' <= piece && piece <= 'Z' {
@@ -90,8 +90,8 @@ func (board *Board) Move(from, to Point, color Color) error {
 		return errors.New("cannot move this piece")
 	}
 
-	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
-	board.matrix[from.y][from.x] = ' '
+	board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
+	board.matrix[from.Y][from.X] = ' '
 
 	return nil
 }
