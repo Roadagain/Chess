@@ -27,6 +27,17 @@ func (color Color) String() string {
 	}
 }
 
+func (color Color) Enemy() Color {
+	switch color {
+	case White:
+		return Black
+	case Black:
+		return White
+	default:
+		return color
+	}
+}
+
 var starting = [8][8]byte{
 	{'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'},
 	{'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
