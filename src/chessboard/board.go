@@ -6,8 +6,8 @@ import (
 )
 
 var starting = [8][8]byte{
-	{'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'},
-	{'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+	{'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'},
+	{'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
 	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
 	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
 	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -62,12 +62,34 @@ func (board Board) in(point Point) bool {
 	return 0 <= point.x && point.x < 8 && 0 <= point.y && point.y < 8
 }
 
-func (board *Board) Move(from, to Point) error {
+func (board Board) color(point Point) (Color, error) {
+	if board.in(point) == false {
+		return Unknown, errors.New("out of board")
+	}
+
+	piece := board.matrix[point.y][point.x]
+	if piece == ' ' {
+		return Empty, nil
+	} else if 'A' <= piece && piece <= 'Z' {
+		return White, nil
+	} else if 'a' <= piece && piece <= 'z' {
+		return Black, nil
+	} else {
+		return Unknown, errors.New("Unknown color")
+	}
+}
+
+func (board *Board) Move(from, to Point, color Color) error {
 	if board.in(from) == false || board.in(to) == false {
 		return errors.New("out of board")
-	} else if board.matrix[from.y][from.x] == ' ' {
-		return errors.New("cannot move empty piece")
 	}
+
+	fcolor, ferr := board.color(from)
+	tcolor, terr := board.color(to)
+	if fcolor != color || ferr != nil || tcolor == color || terr != nil {
+		return errors.New("cannot move this piece")
+	}
+
 	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
 	board.matrix[from.y][from.x] = ' '
 

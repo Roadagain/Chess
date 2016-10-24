@@ -16,6 +16,7 @@ func scanMove() (*chessboard.Move, error) {
 func main() {
 	board := chessboard.NewBoard()
 	finish := false
+	now := chessboard.White
 
 	for finish == false {
 		success := false
@@ -32,12 +33,13 @@ func main() {
 				finish = true
 				break
 			}
-			err = board.Move(from.ToPoint(), to.ToPoint())
+			err = board.Move(from.ToPoint(), to.ToPoint(), now)
 			success = err == nil
 			if success == false {
 				fmt.Println(err)
 			}
 		}
 		fmt.Println()
+		now = now.Enemy()
 	}
 }
