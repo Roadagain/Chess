@@ -5,6 +5,15 @@ import (
 	"fmt"
 )
 
+type Color int
+
+const (
+	Unknown Color = iota
+	Empty
+	White
+	Black
+)
+
 var starting = [8][8]byte{
 	{'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'},
 	{'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
