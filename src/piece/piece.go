@@ -5,17 +5,13 @@ import (
 	"point"
 )
 
-type Limit [3][3]int
-
 type Piece struct {
 	movable []point.Point
-	limit   Limit
 }
 
-func NewPiece(movable []point.Point, limit Limit) *Piece {
+func NewPiece(movable []point.Point) *Piece {
 	piece := new(Piece)
 	piece.movable = movable
-	piece.limit = limit
 	return piece
 }
 
