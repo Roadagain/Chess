@@ -12,6 +12,13 @@ type Piece struct {
 	limit   Limit
 }
 
+func NewPiece(movable []point.Point, limit Limit) *Piece {
+	piece := new(Piece)
+	piece.movable = movable
+	piece.limit = limit
+	return piece
+}
+
 func (piece Piece) CanMove(from, to point.Point) bool {
 	if chessboard.InBoard(from) == false || chessboard.InBoard(to) == false {
 		return false
