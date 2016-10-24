@@ -89,7 +89,7 @@ func (board Board) color(point Point) (Color, error) {
 		return Unknown, errors.New("out of board")
 	}
 
-	piece := board[point.y][point.x]
+	piece := board.matrix[point.y][point.x]
 	if piece == ' ' {
 		return Empty, nil
 	} else if 'A' <= piece && piece <= 'Z' {
