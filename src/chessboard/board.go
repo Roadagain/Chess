@@ -89,13 +89,15 @@ func (board Board) color(point Point) (Color, error) {
 		return Unknown, errors.New("out of board")
 	}
 
-	piece = board[point.y][point.x]
+	piece := board[point.y][point.x]
 	if piece == ' ' {
 		return Empty, nil
 	} else if 'A' <= piece && piece <= 'Z' {
 		return White, nil
-	} else {
+	} else if 'a' <= piece && piece <= 'z' {
 		return Black, nil
+	} else {
+		return Unknown, errors.New("Unknown color")
 	}
 }
 
