@@ -3,6 +3,7 @@ package chessboard
 import (
 	"errors"
 	"fmt"
+	"point"
 )
 
 var starting = [8][8]byte{
@@ -58,11 +59,11 @@ func (board *Board) Print() {
 	fmt.Println()
 }
 
-func InBoard(point Point) bool {
+func InBoard(point point.Point) bool {
 	return 0 <= point.X && point.X < 8 && 0 <= point.Y && point.Y < 8
 }
 
-func (board Board) color(point Point) (Color, error) {
+func (board Board) color(point point.Point) (Color, error) {
 	if InBoard(point) == false {
 		return Unknown, errors.New("out of board")
 	}
@@ -79,7 +80,7 @@ func (board Board) color(point Point) (Color, error) {
 	}
 }
 
-func (board *Board) Move(from, to Point, color Color) error {
+func (board *Board) Move(from, to point.Point, color Color) error {
 	if InBoard(from) == false || InBoard(to) == false {
 		return errors.New("out of board")
 	}
