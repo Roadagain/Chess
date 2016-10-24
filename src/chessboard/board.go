@@ -14,6 +14,19 @@ const (
 	Black
 )
 
+func (color Color) String() string {
+	switch color {
+	case Empty:
+		return "Empty"
+	case White:
+		return "White"
+	case Black:
+		return "Black"
+	default:
+		return "Unknown"
+	}
+}
+
 var starting = [8][8]byte{
 	{'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'},
 	{'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
