@@ -101,12 +101,18 @@ func (board Board) color(point Point) (Color, error) {
 	}
 }
 
-func (board *Board) Move(from, to Point) error {
+func (board *Board) Move(from, to Point, color Color) error {
 	if board.in(from) == false || board.in(to) == false {
 		return errors.New("out of board")
-	} else if board.matrix[from.y][from.x] == ' ' {
-		return errors.New("cannot move empty piece")
 	}
+
+	fcolor := board.color(from)
+	if fcolor == Empty {
+		return errors.New("cannot move empty piece")
+	} else if fcolor != color {
+		return errors.New(fmt.Sprintf("cannnot move %+v piece", fcolor))
+	}
+
 	board.matrix[to.y][to.x] = board.matrix[from.y][from.x]
 	board.matrix[from.y][from.x] = ' '
 
