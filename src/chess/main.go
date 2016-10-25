@@ -16,14 +16,14 @@ func scanMove() (*point.Move, error) {
 }
 
 func main() {
-	board := chessboard.NewBoard()
+	chessboard := board.NewBoard()
 	finish := false
 	now := color.White
 
 	for finish == false {
 		success := false
 
-		board.Print()
+		chessboard.Print()
 		for success == false {
 			from, err := scanMove()
 			if err != nil {
@@ -35,7 +35,7 @@ func main() {
 				finish = true
 				break
 			}
-			err = board.Move(from.ToPoint(), to.ToPoint(), now)
+			err = chessboard.Move(from.ToPoint(), to.ToPoint(), now)
 			success = err == nil
 			if success == false {
 				fmt.Println(err)

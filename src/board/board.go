@@ -1,4 +1,4 @@
-package chessboard
+package board
 
 import (
 	"color"
