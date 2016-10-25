@@ -81,7 +81,8 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	} else if fcolor == color.Black {
 		diff = to.Diff(from)
 	}
-	canMove := piece.WhichPiece(fsymbol).CanMove(diff)
+	fpiece := piece.WhichPiece(fsymbol)
+	canMove := fpiece.CanMove(diff)
 	if fcolor != c || tcolor == c || canMove == false {
 		return errors.New("cannot move this piece")
 	}
