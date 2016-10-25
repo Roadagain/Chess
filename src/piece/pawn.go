@@ -8,7 +8,7 @@ var (
 )
 
 func init() {
-	pawnMovable.append(point.Point{-1, 0})
+	pawnMovable = append(pawnMovable, point.Point{-1, 0})
 	Pawn = Piece{
 		movable: pawnMovable,
 		white:   'P',

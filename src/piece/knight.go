@@ -10,8 +10,8 @@ var (
 func init() {
 	for _, i := range [2]int{-1, 1} {
 		for _, j := range [2]int{-2, 2} {
-			knightMovable.append(point.Point{i, j})
-			knightMovable.append(point.Point{j, i})
+			knightMovable = append(knightMovable, point.Point{i, j})
+			knightMovable = append(knightMovable, point.Point{j, i})
 		}
 	}
 	Knight = Piece{

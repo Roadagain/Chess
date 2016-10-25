@@ -13,7 +13,7 @@ func init() {
 			if i == 0 && j == 0 {
 				continue
 			}
-			kingMovable.append(point.Point{i, j})
+			kingMovable = append(kingMovable, point.Point{i, j})
 		}
 	}
 	King = Piece{
