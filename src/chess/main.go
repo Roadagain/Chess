@@ -4,14 +4,15 @@ import (
 	"chessboard"
 	"color"
 	"fmt"
+	"point"
 )
 
-func scanMove() (*chessboard.Move, error) {
+func scanMove() (*point.Move, error) {
 	var file byte
 	var rank int
 
 	_, err := fmt.Scanf("%c%d", &file, &rank)
-	return chessboard.NewMove(file, rank), err
+	return point.NewMove(file, rank), err
 }
 
 func main() {
