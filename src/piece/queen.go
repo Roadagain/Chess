@@ -8,7 +8,7 @@ var (
 )
 
 func init() {
-	for i = 1; i < 8; i++ {
+	for i := 1; i < 8; i++ {
 		queenMovable.append(point.Point{-i, -i})
 		queenMovable.append(point.Point{-i, 0})
 		queenMovable.append(point.Point{-i, i})
