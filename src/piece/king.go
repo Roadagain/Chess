@@ -3,8 +3,8 @@ package piece
 import "point"
 
 var (
-	kingMove []point.Point
-	King     Piece
+	kingMovable []point.Point
+	King        Piece
 )
 
 func init() {
@@ -13,11 +13,11 @@ func init() {
 			if i == 0 && j == 0 {
 				continue
 			}
-			kingMove.append(point.Point{i, j})
+			kingMovable.append(point.Point{i, j})
 		}
 	}
 	King = Piece{
-		movable: kingMove,
+		movable: kingMovable,
 		white:   'K',
 		black:   'k',
 	}
