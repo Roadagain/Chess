@@ -17,12 +17,13 @@ func NewPiece(movable []point.Point, white, black byte) *Piece {
 }
 
 func (piece Piece) CanMove(diff point.Point) bool {
+	canMove := false
 	for i := 0; i < len(piece.movable); i++ {
 		if diff.Y == piece.movable[i].Y && diff.X == piece.movable[i].X {
-			return true
+			canMove = true
 		}
 	}
-	return false
+	return canMove
 }
 
 func WhichPiece(symbol byte) Piece {
