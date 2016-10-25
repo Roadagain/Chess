@@ -26,6 +26,10 @@ func (piece Piece) CanMove(diff point.Point) bool {
 	return canMove
 }
 
+func (piece Piece) IsSymbol(symbol byte) bool {
+	return symbol == piece.white || symbol == piece.black
+}
+
 func WhichPiece(symbol byte) Piece {
 	switch symbol {
 	case 'B', 'b':
