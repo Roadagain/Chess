@@ -12,4 +12,8 @@ var queenMove = []point.Point{
 	point.Point{8, 0},
 	point.Point{8, 8},
 }
-var Queen = NewPiece(queenMove, 'Q', 'q')
+var Queen = Piece{
+	movable: queenMove,
+	white:   'Q',
+	black:   'q',
+}

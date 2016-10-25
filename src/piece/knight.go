@@ -12,4 +12,8 @@ var knightMove = []point.Point{
 	point.Point{2, -1},
 	point.Point{2, 1},
 }
-var Knight = NewPiece(knightMove, 'N', 'n')
+var Knight = Piece{
+	movable: knightMove,
+	white:   'N',
+	black:   'n',
+}
