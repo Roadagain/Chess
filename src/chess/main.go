@@ -2,6 +2,7 @@ package main
 
 import (
 	"chessboard"
+	"color"
 	"fmt"
 )
 
@@ -16,7 +17,7 @@ func scanMove() (*chessboard.Move, error) {
 func main() {
 	board := chessboard.NewBoard()
 	finish := false
-	now := chessboard.White
+	now := color.White
 
 	for finish == false {
 		success := false

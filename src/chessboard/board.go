@@ -1,6 +1,7 @@
 package chessboard
 
 import (
+	"color"
 	"errors"
 	"fmt"
 	"point"
@@ -63,31 +64,14 @@ func InBoard(point point.Point) bool {
 	return 0 <= point.X && point.X < 8 && 0 <= point.Y && point.Y < 8
 }
 
-func (board Board) color(point point.Point) (Color, error) {
-	if InBoard(point) == false {
-		return Unknown, errors.New("out of board")
-	}
-
-	piece := board.matrix[point.Y][point.X]
-	if piece == ' ' {
-		return Empty, nil
-	} else if 'A' <= piece && piece <= 'Z' {
-		return White, nil
-	} else if 'a' <= piece && piece <= 'z' {
-		return Black, nil
-	} else {
-		return Unknown, errors.New("Unknown color")
-	}
-}
-
-func (board *Board) Move(from, to point.Point, color Color) error {
+func (board *Board) Move(from, to point.Point, c color.Color) error {
 	if InBoard(from) == false || InBoard(to) == false {
 		return errors.New("out of board")
 	}
 
-	fcolor, ferr := board.color(from)
-	tcolor, terr := board.color(to)
-	if fcolor != color || ferr != nil || tcolor == color || terr != nil {
+	fcolor := color.WhichColor(board.matrix[from.Y][from.X])
+	tcolor := color.WhichColor(board.matrix[to.Y][to.X])
+	if fcolor != c || tcolor == c {
 		return errors.New("cannot move this piece")
 	}
 
