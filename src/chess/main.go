@@ -1,7 +1,7 @@
 package main
 
 import (
-	"chessboard"
+	"board"
 	"color"
 	"fmt"
 	"point"
