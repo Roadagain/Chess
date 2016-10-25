@@ -4,28 +4,18 @@ import (
 	"color"
 	"errors"
 	"fmt"
+	"matrix"
 	"piece"
 	"point"
 )
 
-var starting = [8][8]byte{
-	{'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'},
-	{'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
-	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-	{'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
-	{'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'},
-}
-
 type Board struct {
-	matrix [8][8]byte
+	matrix matrix.Matrix
 }
 
 func NewBoard() *Board {
 	board := new(Board)
-	board.matrix = starting
+	board.matrix = matrix.Starting()
 	return board
 }
 
