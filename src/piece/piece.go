@@ -1,9 +1,6 @@
 package piece
 
-import (
-	"chessboard"
-	"point"
-)
+import "point"
 
 type Piece struct {
 	movable []point.Point
@@ -19,11 +16,7 @@ func NewPiece(movable []point.Point, white, black byte) *Piece {
 	return piece
 }
 
-func (piece Piece) CanMove(from, to point.Point) bool {
-	if chessboard.InBoard(from) == false || chessboard.InBoard(to) == false {
-		return false
-	}
-	diff := from.Diff(to)
+func (piece Piece) CanMove(diff point.Point) bool {
 	for i := 0; i < len(piece.movable); i++ {
 		if diff.Y == piece.movable[i].Y && diff.X == piece.movable[i].X {
 			return true
