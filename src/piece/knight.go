@@ -2,18 +2,21 @@ package piece
 
 import "point"
 
-var knightMove = []point.Point{
-	point.Point{-2, -1},
-	point.Point{-2, 1},
-	point.Point{-1, -2},
-	point.Point{-1, 2},
-	point.Point{1, -2},
-	point.Point{1, 2},
-	point.Point{2, -1},
-	point.Point{2, 1},
-}
-var Knight = Piece{
-	movable: knightMove,
-	white:   'N',
-	black:   'n',
+var (
+	knightMove []point.Point
+	Knight     Piece
+)
+
+func init() {
+	for _, i := range [2]int{-1, 1} {
+		for _, j := range [2]int{-2, 2} {
+			knightMove.append(point.Point{i, j})
+			knightMove.append(point.Point{j, i})
+		}
+	}
+	Knight = Piece{
+		movable: knightMove,
+		white:   'N',
+		black:   'n',
+	}
 }
