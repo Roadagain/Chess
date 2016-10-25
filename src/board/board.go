@@ -51,12 +51,8 @@ func (board *Board) Print() {
 	fmt.Println()
 }
 
-func InBoard(point point.Point) bool {
-	return 0 <= point.X && point.X < 8 && 0 <= point.Y && point.Y < 8
-}
-
 func (board *Board) Move(from, to point.Point, c color.Color) error {
-	if InBoard(from) == false || InBoard(to) == false {
+	if matrix.InMatrix(from) == false || matrix.InMatrix(to) == false {
 		return errors.New("out of board")
 	}
 
