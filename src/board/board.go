@@ -4,6 +4,7 @@ import (
 	"color"
 	"errors"
 	"fmt"
+	"piece"
 	"point"
 )
 
@@ -69,9 +70,19 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 		return errors.New("out of board")
 	}
 
+	fsymbol := board.matrix[from.Y][from.X]
+	// tsymbol := board.matrix[to.Y][to.X]
+
 	fcolor := color.WhichColor(board.matrix[from.Y][from.X])
 	tcolor := color.WhichColor(board.matrix[to.Y][to.X])
-	if fcolor != c || tcolor == c {
+	diff := point.Point{0, 0}
+	if fcolor == color.White {
+		diff = from.Diff(to)
+	} else if fcolor == color.Black {
+		diff = to.Diff(from)
+	}
+	canMove := piece.WhichPiece(fsymbol).CanMove(diff)
+	if fcolor != c || tcolor == c || canMove == false {
 		return errors.New("cannot move this piece")
 	}
 
