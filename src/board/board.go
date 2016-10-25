@@ -71,10 +71,15 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	} else if fcolor == color.Black {
 		diff = to.Diff(from)
 	}
+	if fcolor != c || tcolor == c {
+		return errors.New("cannot move this piece")
+	}
+
 	fpiece := piece.WhichPiece(fsymbol)
 	canMove := fpiece.CanMove(diff)
-	if fcolor != c || tcolor == c || canMove == false {
-		return errors.New("cannot move this piece")
+	existBarrier := board.matrix.ExistBarrier(from, to)
+	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
+		return errors.New("cannot move this piece to that point")
 	}
 
 	board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
