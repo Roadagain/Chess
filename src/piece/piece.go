@@ -24,3 +24,22 @@ func (piece Piece) CanMove(diff point.Point) bool {
 	}
 	return false
 }
+
+func WhichPiece(symbol byte) Piece {
+	switch symbol {
+	case 'B', 'b':
+		return Bishop
+	case 'K', 'k':
+		return King
+	case 'N', 'n':
+		return Knight
+	case 'P', 'p':
+		return Pawn
+	case 'Q', 'q':
+		return Queen
+	case 'R', 'r':
+		return Rook
+	default:
+		return Empty
+	}
+}
