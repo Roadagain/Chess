@@ -2,7 +2,7 @@ package piece
 
 import "point"
 
-var queenMove = []point.Point{
+var knightMove = []point.Point{
 	point.Point{-2, -1},
 	point.Point{-2, 1},
 	point.Point{-1, -2},
@@ -12,4 +12,4 @@ var queenMove = []point.Point{
 	point.Point{2, -1},
 	point.Point{2, 1},
 }
-var Queen = NewPiece(queenMove)
+var Knight = NewPiece(knightMove, 'N', 'n')

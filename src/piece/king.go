@@ -12,4 +12,4 @@ var kingMove = []point.Point{
 	point.Point{1, 0},
 	point.Point{1, 1},
 }
-var King = NewPiece(kingMove)
+var King = NewPiece(kingMove, 'K', 'k')

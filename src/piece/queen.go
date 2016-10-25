@@ -12,4 +12,4 @@ var queenMove = []point.Point{
 	point.Point{8, 0},
 	point.Point{8, 8},
 }
-var Queen = NewPiece(queenMove)
+var Queen = NewPiece(queenMove, 'Q', 'q')
