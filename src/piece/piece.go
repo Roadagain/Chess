@@ -7,11 +7,15 @@ import (
 
 type Piece struct {
 	movable []point.Point
+	black   byte
+	white   byte
 }
 
-func NewPiece(movable []point.Point) *Piece {
+func NewPiece(movable []point.Point, black, white byte) *Piece {
 	piece := new(Piece)
 	piece.movable = movable
+	piece.black = black
+	piece.white = white
 	return piece
 }
 
