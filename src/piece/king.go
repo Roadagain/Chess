@@ -17,7 +17,7 @@ func init() {
 			kingMovable = append(kingMovable, point.Point{i, j})
 		}
 	}
-	kingFirstMovable = append(kingFirstMovable, point.Point{0, -1})
+	kingFirstMovable = append(kingFirstMovable, point.Point{0, 2})
 	kingFirstMovable = append(kingFirstMovable, point.Point{0, -2})
 	King = Piece{
 		movable:      kingMovable,
