@@ -15,8 +15,9 @@ func init() {
 		rookMovable = append(rookMovable, point.Point{0, -i})
 	}
 	Rook = Piece{
-		movable: rookMovable,
-		white:   'R',
-		black:   'r',
+		movable:      rookMovable,
+		firstMovable: make([]point.Point, 0),
+		white:        'R',
+		black:        'r',
 	}
 }

@@ -15,8 +15,9 @@ func init() {
 		bishopMovable = append(bishopMovable, point.Point{-i, -i})
 	}
 	Bishop = Piece{
-		movable: bishopMovable,
-		white:   'B',
-		black:   'b',
+		movable:      bishopMovable,
+		firstMovable: make([]point.Point, 0),
+		white:        'B',
+		black:        'b',
 	}
 }

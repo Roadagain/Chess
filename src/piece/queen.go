@@ -19,8 +19,9 @@ func init() {
 		queenMovable = append(queenMovable, point.Point{i, i})
 	}
 	Queen = Piece{
-		movable: queenMovable,
-		white:   'Q',
-		black:   'q',
+		movable:      queenMovable,
+		firstMovable: make([]point.Point, 0),
+		white:        'Q',
+		black:        'q',
 	}
 }

@@ -3,14 +3,16 @@ package piece
 import "point"
 
 type Piece struct {
-	movable []point.Point
-	white   byte
-	black   byte
+	movable      []point.Point
+	firstMovable []point.Point
+	white        byte
+	black        byte
 }
 
-func NewPiece(movable []point.Point, white, black byte) *Piece {
+func NewPiece(movable, firstMovable []point.Point, white, black byte) *Piece {
 	piece := new(Piece)
 	piece.movable = movable
+	piece.firstMovable = firstMovable
 	piece.white = white
 	piece.black = black
 	return piece
