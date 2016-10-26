@@ -1,27 +1,29 @@
 package main
 
 import (
-	"chessboard"
+	"board"
+	"color"
 	"fmt"
+	"point"
 )
 
-func scanMove() (*chessboard.Move, error) {
+func scanMove() (*point.Move, error) {
 	var file byte
 	var rank int
 
 	_, err := fmt.Scanf("%c%d", &file, &rank)
-	return chessboard.NewMove(file, rank), err
+	return point.NewMove(file, rank), err
 }
 
 func main() {
-	board := chessboard.NewBoard()
+	chessboard := board.NewBoard()
 	finish := false
-	now := chessboard.White
+	now := color.White
 
 	for finish == false {
 		success := false
 
-		board.Print()
+		chessboard.Print()
 		for success == false {
 			from, err := scanMove()
 			if err != nil {
@@ -33,7 +35,7 @@ func main() {
 				finish = true
 				break
 			}
-			err = board.Move(from.ToPoint(), to.ToPoint(), now)
+			err = chessboard.Move(from.ToPoint(), to.ToPoint(), now)
 			success = err == nil
 			if success == false {
 				fmt.Println(err)

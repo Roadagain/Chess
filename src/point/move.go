@@ -1,4 +1,4 @@
-package chessboard
+package point
 
 type Move struct {
 	file byte

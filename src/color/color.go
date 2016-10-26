@@ -1,4 +1,4 @@
-package chessboard
+package color
 
 type Color int
 
@@ -30,5 +30,17 @@ func (color Color) Enemy() Color {
 		return White
 	default:
 		return color
+	}
+}
+
+func WhichColor(c byte) Color {
+	if 'A' <= c && c <= 'Z' {
+		return White
+	} else if 'a' <= c && c <= 'z' {
+		return Black
+	} else if c == ' ' {
+		return Empty
+	} else {
+		return Unknown
 	}
 }
