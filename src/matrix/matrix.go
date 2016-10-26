@@ -25,20 +25,12 @@ func InMatrix(p point.Point) bool {
 
 func (mat Matrix) ExistBarrier(from, to point.Point) bool {
 	p := from
+	p.StepTo(to)
 	for p != to {
-		if p.Y < to.Y {
-			p.Y++
-		} else if p.Y > to.Y {
-			p.Y--
-		}
-		if p.X < to.X {
-			p.X++
-		} else if p.X > to.X {
-			p.X--
-		}
 		if mat[p.Y][p.X] != ' ' {
 			return true
 		}
+		p.StepTo(to)
 	}
 	return false
 }
