@@ -58,6 +58,29 @@ func (board *Board) Print() {
 	fmt.Println()
 }
 
+func (board *Board) CanCastling(from, to point.Point) bool {
+	diff := from.Diff(to)
+	rfrom := from
+	rto := to
+
+	if diff.X == 2 {
+		rfrom.X = 7
+		rto.X = to.X - 1
+	} else {
+		rfrom.X = 0
+		rto.X = to.X + 1
+	}
+	fsymbol := board.matrix[rfrom.Y][rfrom.X]
+	if piece.Rook.IsSymbol(fsymbol) == false {
+		return false
+	} else if board.first[rfrom.Y][rfrom.X] == false {
+		return false
+	} else if board.matrix.ExistBarrier(rfrom, rto) == false {
+		return false
+	}
+	return true
+}
+
 func (board *Board) Move(from, to point.Point, c color.Color) error {
 	if matrix.InMatrix(from) == false || matrix.InMatrix(to) == false {
 		return errors.New("out of board")
@@ -82,6 +105,8 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	canMove := fpiece.CanMove(diff, board.first[from.Y][from.X])
 	existBarrier := board.matrix.ExistBarrier(from, to)
 	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
+		return errors.New("cannot move this piece to that point")
+	} else if piece.King.IsSymbol(fsymbol) && board.CanCastling(from, to) == false {
 		return errors.New("cannot move this piece to that point")
 	}
 
