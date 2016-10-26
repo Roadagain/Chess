@@ -25,7 +25,7 @@ func (piece Piece) CanMove(diff point.Point, first bool) bool {
 		}
 	}
 	for i := 0; i < len(piece.firstMovable); i++ {
-		if diff.Y == piece.movable[i].Y && diff.X == piece.movable[i].X && first {
+		if diff.Y == piece.firstMovable[i].Y && diff.X == piece.firstMovable[i].X && first {
 			return true
 		}
 	}
