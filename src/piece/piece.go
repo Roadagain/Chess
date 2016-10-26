@@ -18,14 +18,18 @@ func NewPiece(movable, firstMovable []point.Point, white, black byte) *Piece {
 	return piece
 }
 
-func (piece Piece) CanMove(diff point.Point) bool {
-	canMove := false
+func (piece Piece) CanMove(diff point.Point, first bool) bool {
 	for i := 0; i < len(piece.movable); i++ {
 		if diff.Y == piece.movable[i].Y && diff.X == piece.movable[i].X {
-			canMove = true
+			return true
 		}
 	}
-	return canMove
+	for i := 0; i < len(piece.firstMovable); i++ {
+		if diff.Y == piece.movable[i].Y && diff.X == piece.movable[i].X && first {
+			return true
+		}
+	}
+	return false
 }
 
 func (piece Piece) IsSymbol(symbol byte) bool {
