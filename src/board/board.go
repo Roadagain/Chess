@@ -11,11 +11,18 @@ import (
 
 type Board struct {
 	matrix matrix.Matrix
+	first  [8][8]bool
 }
 
 func NewBoard() *Board {
 	board := new(Board)
 	board.matrix = matrix.Starting()
+	for i := 0; i < 8; i++ {
+		board.first[0][i] = true
+		board.first[1][i] = true
+		board.first[6][i] = true
+		board.first[7][i] = true
+	}
 	return board
 }
 
@@ -72,7 +79,7 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	}
 
 	fpiece := piece.WhichPiece(fsymbol)
-	canMove := fpiece.CanMove(diff)
+	canMove := fpiece.CanMove(diff, board.first[from.Y][from.X])
 	existBarrier := board.matrix.ExistBarrier(from, to)
 	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
 		return errors.New("cannot move this piece to that point")
@@ -80,6 +87,8 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 
 	board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
 	board.matrix[from.Y][from.X] = ' '
+	board.first[from.Y][from.X] = false
+	board.first[to.Y][to.X] = false
 
 	return nil
 }
