@@ -19,13 +19,13 @@ func NewPiece(movable, firstMovable []point.Point, white, black byte) *Piece {
 }
 
 func (piece Piece) CanMove(diff point.Point, first bool) bool {
-	for i := 0; i < len(piece.movable); i++ {
-		if diff.Y == piece.movable[i].Y && diff.X == piece.movable[i].X {
+	for _, i := range piece.movable {
+		if diff.Y == i.Y && diff.X == i.X {
 			return true
 		}
 	}
-	for i := 0; i < len(piece.firstMovable); i++ {
-		if diff.Y == piece.firstMovable[i].Y && diff.X == piece.firstMovable[i].X && first {
+	for _, i := range piece.firstMovable {
+		if diff.Y == i.Y && diff.X == i.X && first {
 			return true
 		}
 	}
