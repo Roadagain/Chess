@@ -124,7 +124,8 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	}
 
 	fpiece := piece.WhichPiece(fsymbol)
-	canMove := fpiece.CanMove(diff, board.first[from.Y][from.X])
+	toEnemy := color.WhichColor(board.matrix[to.Y][to.X]) == c.Enemy()
+	canMove := fpiece.CanMove(diff, board.first[from.Y][from.X], toEnemy)
 	existBarrier := board.matrix.ExistBarrier(from, to)
 	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
 		return errors.New("cannot move this piece to that point")
