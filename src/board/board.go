@@ -75,10 +75,32 @@ func (board *Board) CanCastling(from, to point.Point) bool {
 		return false
 	} else if board.first[rfrom.Y][rfrom.X] == false {
 		return false
-	} else if board.matrix.ExistBarrier(rfrom, rto) == false {
+	} else if board.matrix.ExistBarrier(rfrom, rto) {
 		return false
 	}
 	return true
+}
+
+func (board *Board) Castling(from, to point.Point) {
+	diff := from.Diff(to)
+	rfrom := from
+	rto := to
+	if diff.X == 2 {
+		rfrom.X = 7
+		rto.X = to.X - 1
+	} else {
+		rfrom.X = 0
+		rto.X = to.X + 1
+	}
+
+	board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
+	board.matrix[from.Y][from.X] = ' '
+	board.first[from.Y][from.X] = false
+	board.first[to.Y][to.X] = false
+	board.matrix[rto.Y][rto.X] = board.matrix[rfrom.Y][rfrom.X]
+	board.matrix[rfrom.Y][rfrom.X] = ' '
+	board.first[rfrom.Y][rfrom.X] = false
+	board.first[rto.Y][rto.X] = false
 }
 
 func (board *Board) Move(from, to point.Point, c color.Color) error {
@@ -106,14 +128,20 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	existBarrier := board.matrix.ExistBarrier(from, to)
 	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
 		return errors.New("cannot move this piece to that point")
-	} else if piece.King.IsSymbol(fsymbol) && board.CanCastling(from, to) == false {
-		return errors.New("cannot move this piece to that point")
 	}
 
-	board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
-	board.matrix[from.Y][from.X] = ' '
-	board.first[from.Y][from.X] = false
-	board.first[to.Y][to.X] = false
+	isCastling := piece.King.IsSymbol(fsymbol) && (diff.X == -2 || diff.X == 2)
+	canCastling := isCastling && board.CanCastling(from, to)
+	if isCastling && canCastling == false {
+		return errors.New("cannot move this piece to that point")
+	} else if canCastling == true {
+		board.Castling(from, to)
+	} else {
+		board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
+		board.matrix[from.Y][from.X] = ' '
+		board.first[from.Y][from.X] = false
+		board.first[to.Y][to.X] = false
+	}
 
 	return nil
 }
