@@ -29,7 +29,8 @@ _testmain.go
 *.out
 
 # external packages folder
-vendor/
+vendor/*
+!vendor/manifest
 
 # gb folders
 bin/
