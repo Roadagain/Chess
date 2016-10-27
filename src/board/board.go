@@ -58,6 +58,32 @@ func (board *Board) Print() {
 	fmt.Println()
 }
 
+func (board Board) IsChecked(c Color) bool {
+	var king point.Point
+	for i := 0; i < 8; i++ {
+		for j := 0; j < 8; j++ {
+			symbol := board.matrix[i][j]
+			if piece.King.IsSymbol(symbol) && color.WhichColor(symbol) == c {
+				king := Point{i, j}
+				break
+			}
+		}
+	}
+	enemy := c.Enemy()
+	for i := 0; i < 8; i++ {
+		for j := 0; j < 8; j++ {
+			symbol := board.matrix[i][j]
+			piece := piece.WhichPiece(symbol)
+			first := board.first[i][j]
+			diff := point.Point{i, j}.Diff(king)
+			if color.WhichColor(symbol) == enemy && piece.CanMove(diff, first, true) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (board *Board) CanCastling(from, to point.Point) bool {
 	diff := from.Diff(to)
 	rfrom := from
