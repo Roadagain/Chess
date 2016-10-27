@@ -109,7 +109,7 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	}
 
 	fsymbol := board.matrix[from.Y][from.X]
-	// tsymbol := board.matrix[to.Y][to.X]
+	tsymbol := board.matrix[to.Y][to.X]
 
 	fcolor := color.WhichColor(board.matrix[from.Y][from.X])
 	tcolor := color.WhichColor(board.matrix[to.Y][to.X])
@@ -131,6 +131,9 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 		return errors.New("cannot move this piece to that point")
 	}
 
+	ffirst := board.first[from.Y][from.X]
+	tfirst := board.first[to.Y][to.X]
+
 	isCastling := piece.King.IsSymbol(fsymbol) && (diff.X == -2 || diff.X == 2)
 	canCastling := isCastling && board.CanCastling(from, to)
 	if isCastling && canCastling == false {
@@ -142,6 +145,13 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 		board.matrix[from.Y][from.X] = ' '
 		board.first[from.Y][from.X] = false
 		board.first[to.Y][to.X] = false
+	}
+	if board.IsChecked(c) {
+		board.matrix[from.Y][from.X] = fsymbol
+		board.matrix[to.Y][to.X] = tsymbol
+		board.first[from.Y][from.X] = ffirst
+		board.first[to.Y][to.X] = tfirst
+		return errors.New("cannot move this piece to that point")
 	}
 
 	return nil

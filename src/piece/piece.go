@@ -27,7 +27,7 @@ func (piece Piece) CanMove(diff point.Point, first, enemy bool) bool {
 		}
 	}
 	for _, i := range piece.firstMovable {
-		if diff.Y == i.Y && diff.X == i.X && first {
+		if diff.Y == i.Y && diff.X == i.X && first && (Pawn.IsSymbol(piece.white) == false || enemy == false) {
 			return true
 		}
 	}
