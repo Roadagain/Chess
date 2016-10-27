@@ -24,7 +24,10 @@ func main() {
 		success := false
 
 		chessboard.Print()
-		if chessboard.IsChecked(now) {
+		if chessboard.IsCheckMate(now) {
+			fmt.Println("Checkmate")
+			break
+		} else if chessboard.IsChecked(now) {
 			fmt.Println("Your king is checked")
 		}
 
