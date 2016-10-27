@@ -58,13 +58,13 @@ func (board *Board) Print() {
 	fmt.Println()
 }
 
-func (board Board) IsChecked(c Color) bool {
+func (board Board) IsChecked(c color.Color) bool {
 	var king point.Point
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			symbol := board.matrix[i][j]
 			if piece.King.IsSymbol(symbol) && color.WhichColor(symbol) == c {
-				king := Point{i, j}
+				king = point.Point{i, j}
 				break
 			}
 		}
