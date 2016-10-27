@@ -120,7 +120,7 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 		diff = to.Diff(from)
 	}
 	if fcolor != c || tcolor == c {
-		return errors.New("cannot move this piece")
+		return errors.New("cannot move pieces that is not yours")
 	}
 
 	fpiece := piece.WhichPiece(fsymbol)
@@ -128,7 +128,7 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	canMove := fpiece.CanMove(diff, board.first[from.Y][from.X], toEnemy)
 	existBarrier := board.matrix.ExistBarrier(from, to)
 	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
-		return errors.New("cannot move this piece to that point")
+		return errors.New("cannot move this piece to there")
 	}
 
 	ffirst := board.first[from.Y][from.X]
@@ -137,7 +137,7 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 	isCastling := piece.King.IsSymbol(fsymbol) && (diff.X == -2 || diff.X == 2)
 	canCastling := isCastling && board.CanCastling(from, to)
 	if isCastling && canCastling == false {
-		return errors.New("cannot move this piece to that point")
+		return errors.New("cannnot castle to that point")
 	} else if canCastling == true {
 		board.Castling(from, to)
 	} else {
@@ -151,7 +151,7 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 		board.matrix[to.Y][to.X] = tsymbol
 		board.first[from.Y][from.X] = ffirst
 		board.first[to.Y][to.X] = tfirst
-		return errors.New("cannot move this piece to that point")
+		return errors.New("cannot move that piece there: your king will be checked")
 	}
 
 	return nil
