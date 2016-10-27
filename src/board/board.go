@@ -73,10 +73,15 @@ func (board Board) IsChecked(c color.Color) bool {
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			symbol := board.matrix[i][j]
+			if color.WhichColor(symbol) != enemy {
+				continue
+			}
+
+			from := point.Point{i, j}
 			piece := piece.WhichPiece(symbol)
 			first := board.first[i][j]
-			diff := point.Point{i, j}.Diff(king)
-			if color.WhichColor(symbol) == enemy && piece.CanMove(diff, first, true) {
+			diff := from.Diff(king)
+			if piece.CanMove(diff, first, true) && board.matrix.ExistBarrier(from, king) == false {
 				return true
 			}
 		}
