@@ -1,13 +1,8 @@
 package matrix
 
-import "point"
+const SIDE = 8
 
-const (
-	WIDTH  = 8
-	HEIGHT = 8
-)
-
-type Matrix [HEIGHT][WIDTH]byte
+type Matrix [SIDE][SIDE]byte
 
 var starting = Matrix{
 	{'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
@@ -26,6 +21,7 @@ func Starting() Matrix {
 
 func InMatrix(p point.Point) bool {
 	return 0 <= p.X && p.X < WIDTH && 0 <= p.Y && p.Y < HEIGHT
+	return 0 <= p.X && p.X < SIDE && 0 <= p.Y && p.Y < SIDE
 }
 
 func (mat Matrix) ExistBarrier(from, to point.Point) bool {
