@@ -5,7 +5,6 @@ import (
 	"errors"
 	"matrix"
 	"piece"
-	"point"
 )
 
 type Board struct {
@@ -25,7 +24,7 @@ func NewBoard() *Board {
 	return board
 }
 
-func (board *Board) CanCastling(from, to point.Point) bool {
+func (board *Board) CanCastling(from, to matrix.Point) bool {
 	diff := from.Diff(to)
 	rfrom := from
 	rto := to
@@ -48,7 +47,7 @@ func (board *Board) CanCastling(from, to point.Point) bool {
 	return true
 }
 
-func (board *Board) Castling(from, to point.Point) {
+func (board *Board) Castling(from, to matrix.Point) {
 	diff := from.Diff(to)
 	rfrom := from
 	rto := to
@@ -70,7 +69,7 @@ func (board *Board) Castling(from, to point.Point) {
 	board.first[rto.Y][rto.X] = false
 }
 
-func (board *Board) Move(from, to point.Point, c color.Color) error {
+func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 	if matrix.InMatrix(from) == false || matrix.InMatrix(to) == false {
 		return errors.New("out of board")
 	}
@@ -80,7 +79,7 @@ func (board *Board) Move(from, to point.Point, c color.Color) error {
 
 	fcolor := color.WhichColor(board.matrix[from.Y][from.X])
 	tcolor := color.WhichColor(board.matrix[to.Y][to.X])
-	diff := point.Point{0, 0}
+	diff := matrix.Point{0, 0}
 	if fcolor == color.White {
 		diff = from.Diff(to)
 	} else if fcolor == color.Black {

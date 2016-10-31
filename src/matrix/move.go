@@ -1,4 +1,4 @@
-package point
+package matrix
 
 type Move struct {
 	file byte
@@ -13,5 +13,5 @@ func NewMove(file byte, rank int) *Move {
 }
 
 func (move Move) ToPoint() Point {
-	return Point{8 - move.rank, int(move.file - 'a')}
+	return Point{SIDE - move.rank, int(move.file - 'a')}
 }

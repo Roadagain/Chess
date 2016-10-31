@@ -4,15 +4,15 @@ import (
 	"board"
 	"color"
 	"fmt"
-	"point"
+	"matrix"
 )
 
-func scanMove() (*point.Move, error) {
+func scanMove() (*matrix.Move, error) {
 	var file byte
 	var rank int
 
 	_, err := fmt.Scanf("%c%d", &file, &rank)
-	return point.NewMove(file, rank), err
+	return matrix.NewMove(file, rank), err
 }
 
 func main() {

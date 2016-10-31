@@ -2,17 +2,17 @@ package board
 
 import (
 	"color"
+	"matrix"
 	"piece"
-	"point"
 )
 
 func (board Board) IsChecked(c color.Color) bool {
-	var king point.Point
+	var king matrix.Point
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			symbol := board.matrix[i][j]
 			if piece.King.IsSymbol(symbol) && color.WhichColor(symbol) == c {
-				king = point.Point{i, j}
+				king = matrix.Point{i, j}
 				break
 			}
 		}
@@ -25,7 +25,7 @@ func (board Board) IsChecked(c color.Color) bool {
 				continue
 			}
 
-			from := point.Point{i, j}
+			from := matrix.Point{i, j}
 			piece := piece.WhichPiece(symbol)
 			first := board.first[i][j]
 			diff := from.Diff(king)
@@ -42,19 +42,19 @@ func (board Board) IsCheckMate(c color.Color) bool {
 		return false
 	}
 
-	friend := make([]point.Point, 16)
+	friend := make([]matrix.Point, 16)
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			symbol := board.matrix[i][j]
 			if color.WhichColor(symbol) == c {
-				friend = append(friend, point.Point{i, j})
+				friend = append(friend, matrix.Point{i, j})
 			}
 		}
 	}
 
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
-			to := point.Point{i, j}
+			to := matrix.Point{i, j}
 			for _, k := range friend {
 				fsymbol := board.matrix[k.Y][k.X]
 				tsymbol := board.matrix[to.Y][to.X]

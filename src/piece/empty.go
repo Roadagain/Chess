@@ -1,10 +1,10 @@
 package piece
 
-import "point"
+import "matrix"
 
 var Empty = Piece{
-	movable:      make([]point.Point, 0),
-	firstMovable: make([]point.Point, 0),
+	movable:      make([]matrix.Point, 0),
+	firstMovable: make([]matrix.Point, 0),
 	white:        ' ',
 	black:        ' ',
 }

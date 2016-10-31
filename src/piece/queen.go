@@ -1,26 +1,26 @@
 package piece
 
-import "point"
+import "matrix"
 
 var (
-	queenMovable []point.Point
+	queenMovable []matrix.Point
 	Queen        Piece
 )
 
 func init() {
-	for i := 1; i < 8; i++ {
-		queenMovable = append(queenMovable, point.Point{-i, -i})
-		queenMovable = append(queenMovable, point.Point{-i, 0})
-		queenMovable = append(queenMovable, point.Point{-i, i})
-		queenMovable = append(queenMovable, point.Point{0, -i})
-		queenMovable = append(queenMovable, point.Point{0, i})
-		queenMovable = append(queenMovable, point.Point{i, -i})
-		queenMovable = append(queenMovable, point.Point{i, 0})
-		queenMovable = append(queenMovable, point.Point{i, i})
+	for i := 1; i < matrix.SIDE; i++ {
+		queenMovable = append(queenMovable, matrix.Point{-i, -i})
+		queenMovable = append(queenMovable, matrix.Point{-i, 0})
+		queenMovable = append(queenMovable, matrix.Point{-i, i})
+		queenMovable = append(queenMovable, matrix.Point{0, -i})
+		queenMovable = append(queenMovable, matrix.Point{0, i})
+		queenMovable = append(queenMovable, matrix.Point{i, -i})
+		queenMovable = append(queenMovable, matrix.Point{i, 0})
+		queenMovable = append(queenMovable, matrix.Point{i, i})
 	}
 	Queen = Piece{
 		movable:      queenMovable,
-		firstMovable: make([]point.Point, 0),
+		firstMovable: make([]matrix.Point, 0),
 		white:        'Q',
 		black:        'q',
 	}

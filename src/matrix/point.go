@@ -1,4 +1,4 @@
-package point
+package matrix
 
 type Point struct {
 	Y int
