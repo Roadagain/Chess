@@ -15,9 +15,8 @@ func init() {
 		}
 	}
 	Knight = Piece{
-		movable:      knightMovable,
-		firstMovable: make([]matrix.Point, 0),
-		white:        'N',
-		black:        'n',
+		movable: knightMovable,
+		white:   'N',
+		black:   'n',
 	}
 }
