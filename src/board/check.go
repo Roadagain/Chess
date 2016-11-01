@@ -71,7 +71,6 @@ func (board Board) IsCheckMate(c color.Color) bool {
 					board.matrix[to.Y][to.X] = fsymbol
 					board.matrix[k.Y][k.X] = ' '
 					if board.IsChecked(c) == false {
-						board.Print()
 						board.matrix[to.Y][to.X] = tsymbol
 						board.matrix[k.Y][k.X] = fsymbol
 						return false
