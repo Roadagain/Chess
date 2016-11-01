@@ -1,19 +1,19 @@
 package piece
 
-import "point"
+import "matrix"
 
 var (
-	pawnMovable      []point.Point
-	pawnFirstMovable []point.Point
-	pawnEnemyMovable []point.Point
+	pawnMovable      []matrix.Point
+	pawnFirstMovable []matrix.Point
+	pawnEnemyMovable []matrix.Point
 	Pawn             Piece
 )
 
 func init() {
-	pawnMovable = append(pawnMovable, point.Point{-1, 0})
-	pawnFirstMovable = append(pawnFirstMovable, point.Point{-2, 0})
-	pawnEnemyMovable = append(pawnEnemyMovable, point.Point{-1, -1})
-	pawnEnemyMovable = append(pawnEnemyMovable, point.Point{-1, 1})
+	pawnMovable = append(pawnMovable, matrix.Point{-1, 0})
+	pawnFirstMovable = append(pawnFirstMovable, matrix.Point{-2, 0})
+	pawnEnemyMovable = append(pawnEnemyMovable, matrix.Point{-1, -1})
+	pawnEnemyMovable = append(pawnEnemyMovable, matrix.Point{-1, 1})
 	Pawn = Piece{
 		movable:      pawnMovable,
 		firstMovable: pawnFirstMovable,

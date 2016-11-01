@@ -1,16 +1,16 @@
 package piece
 
-import "point"
+import "matrix"
 
 type Piece struct {
-	movable      []point.Point
-	firstMovable []point.Point
-	enemyMovable []point.Point
+	movable      []matrix.Point
+	firstMovable []matrix.Point
+	enemyMovable []matrix.Point
 	white        byte
 	black        byte
 }
 
-func NewPiece(movable, firstMovable, enemyMovable []point.Point, white, black byte) *Piece {
+func NewPiece(movable, firstMovable, enemyMovable []matrix.Point, white, black byte) *Piece {
 	piece := new(Piece)
 	piece.movable = movable
 	piece.firstMovable = firstMovable
@@ -20,7 +20,7 @@ func NewPiece(movable, firstMovable, enemyMovable []point.Point, white, black by
 	return piece
 }
 
-func (piece Piece) CanMove(diff point.Point, first, enemy bool) bool {
+func (piece Piece) CanMove(diff matrix.Point, first, enemy bool) bool {
 	for _, i := range piece.movable {
 		if diff.Y == i.Y && diff.X == i.X && (Pawn.IsSymbol(piece.white) == false || enemy == false) {
 			return true

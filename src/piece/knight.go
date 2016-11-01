@@ -1,23 +1,22 @@
 package piece
 
-import "point"
+import "matrix"
 
 var (
-	knightMovable []point.Point
+	knightMovable []matrix.Point
 	Knight        Piece
 )
 
 func init() {
 	for _, i := range [2]int{-1, 1} {
 		for _, j := range [2]int{-2, 2} {
-			knightMovable = append(knightMovable, point.Point{i, j})
-			knightMovable = append(knightMovable, point.Point{j, i})
+			knightMovable = append(knightMovable, matrix.Point{i, j})
+			knightMovable = append(knightMovable, matrix.Point{j, i})
 		}
 	}
 	Knight = Piece{
-		movable:      knightMovable,
-		firstMovable: make([]point.Point, 0),
-		white:        'N',
-		black:        'n',
+		movable: knightMovable,
+		white:   'N',
+		black:   'n',
 	}
 }

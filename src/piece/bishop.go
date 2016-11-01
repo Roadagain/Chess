@@ -1,23 +1,22 @@
 package piece
 
-import "point"
+import "matrix"
 
 var (
-	bishopMovable []point.Point
+	bishopMovable []matrix.Point
 	Bishop        Piece
 )
 
 func init() {
-	for i := 1; i < 8; i++ {
-		bishopMovable = append(bishopMovable, point.Point{i, i})
-		bishopMovable = append(bishopMovable, point.Point{-i, i})
-		bishopMovable = append(bishopMovable, point.Point{i, -i})
-		bishopMovable = append(bishopMovable, point.Point{-i, -i})
+	for i := 1; i < matrix.SIDE; i++ {
+		bishopMovable = append(bishopMovable, matrix.Point{i, i})
+		bishopMovable = append(bishopMovable, matrix.Point{-i, i})
+		bishopMovable = append(bishopMovable, matrix.Point{i, -i})
+		bishopMovable = append(bishopMovable, matrix.Point{-i, -i})
 	}
 	Bishop = Piece{
-		movable:      bishopMovable,
-		firstMovable: make([]point.Point, 0),
-		white:        'B',
-		black:        'b',
+		movable: bishopMovable,
+		white:   'B',
+		black:   'b',
 	}
 }
