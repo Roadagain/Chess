@@ -1,5 +1,7 @@
 package matrix
 
+import "fmt"
+
 const SIDE = 8
 
 type Matrix [SIDE][SIDE]byte
@@ -33,4 +35,37 @@ func (mat Matrix) ExistBarrier(from, to Point) bool {
 		p.StepTo(to)
 	}
 	return false
+}
+
+func (mat Matrix) ToString() string {
+	stringMat := " "
+	for i := 0; i < SIDE; i++ {
+		stringMat += fmt.Sprintf(" %c", 'a'+i)
+	}
+	stringMat += "\n"
+
+	for i := 0; i < SIDE; i++ {
+		stringMat += " +"
+		for j := 0; j < SIDE; j++ {
+			stringMat += "-+"
+		}
+		stringMat += "\n"
+		stringMat += fmt.Sprintf("%d|", SIDE-i)
+		for j := 0; j < SIDE; j++ {
+			stringMat += fmt.Sprintf("%c|", mat[i][j])
+		}
+		stringMat += fmt.Sprintf("%d\n", SIDE-i)
+	}
+	stringMat += " +"
+	for i := 0; i < SIDE; i++ {
+		stringMat += "-+"
+	}
+	stringMat += "\n"
+
+	stringMat += " "
+	for i := 0; i < SIDE; i++ {
+		stringMat += fmt.Sprintf(" %c", 'a'+i)
+	}
+
+	return stringMat
 }
