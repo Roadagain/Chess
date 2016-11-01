@@ -3,5 +3,5 @@ package board
 import "fmt"
 
 func (board Board) Print() {
-	fmt.Println(board.matrix.ToString())
+	fmt.Println(board.Matrix.ToString())
 }
