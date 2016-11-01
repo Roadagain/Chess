@@ -65,7 +65,12 @@ func (board Board) IsCheckMate(c color.Color) bool {
 
 				piece := piece.WhichPiece(fsymbol)
 				first := board.first[k.Y][k.X]
-				diff := k.Diff(to)
+				var diff matrix.Point
+				if c == color.White {
+					diff = k.Diff(to)
+				} else if c == color.Black {
+					diff = to.Diff(k)
+				}
 				toEnemy := color.WhichColor(tsymbol) == c.Enemy()
 				if piece.CanMove(diff, first, toEnemy) && board.matrix.ExistBarrier(k, to) == false {
 					board.matrix[to.Y][to.X] = fsymbol
