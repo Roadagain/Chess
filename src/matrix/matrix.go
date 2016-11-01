@@ -38,34 +38,36 @@ func (mat Matrix) ExistBarrier(from, to Point) bool {
 }
 
 func (mat Matrix) ToString() string {
-	stringMat := " "
+	matBytes := make([]byte, (SIDE*2+3)*(SIDE*2+4))
+	matBytes = append(matBytes, " "...)
+	//matBytes := " "
 	for i := 0; i < SIDE; i++ {
-		stringMat += fmt.Sprintf(" %c", 'a'+i)
+		matBytes = append(matBytes, fmt.Sprintf(" %c", 'a'+i)...)
 	}
-	stringMat += "\n"
+	matBytes = append(matBytes, "\n"...)
 
 	for i := 0; i < SIDE; i++ {
-		stringMat += " +"
-		for j := 0; j < SIDE; j++ {
-			stringMat += "-+"
+		matBytes = append(matBytes, " +"...)
+		for i := 0; i < SIDE; i++ {
+			matBytes = append(matBytes, "-+"...)
 		}
-		stringMat += "\n"
-		stringMat += fmt.Sprintf("%d|", SIDE-i)
+		matBytes = append(matBytes, "\n"...)
+		matBytes = append(matBytes, fmt.Sprintf("%d|", SIDE-i)...)
 		for j := 0; j < SIDE; j++ {
-			stringMat += fmt.Sprintf("%c|", mat[i][j])
+			matBytes = append(matBytes, fmt.Sprintf("%c|", mat[i][j])...)
 		}
-		stringMat += fmt.Sprintf("%d\n", SIDE-i)
+		matBytes = append(matBytes, fmt.Sprintf("%d\n", SIDE-i)...)
 	}
-	stringMat += " +"
+	matBytes = append(matBytes, " +"...)
 	for i := 0; i < SIDE; i++ {
-		stringMat += "-+"
+		matBytes = append(matBytes, "-+"...)
 	}
-	stringMat += "\n"
+	matBytes = append(matBytes, "\n"...)
 
-	stringMat += " "
+	matBytes = append(matBytes, " "...)
 	for i := 0; i < SIDE; i++ {
-		stringMat += fmt.Sprintf(" %c", 'a'+i)
+		matBytes = append(matBytes, fmt.Sprintf(" %c", 'a'+i)...)
 	}
 
-	return stringMat
+	return string(matBytes)
 }

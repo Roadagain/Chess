@@ -1,9 +1,6 @@
 package board
 
-import (
-	"fmt"
-	"matrix"
-)
+import "fmt"
 
 func (board Board) Print() {
 	fmt.Println(board.matrix.ToString())
