@@ -79,9 +79,9 @@ func (board *Board) Castling(from, to matrix.Point) {
 	board.first[rto.Y][rto.X] = false
 }
 
-func (board *Board) Move(from, to matrix.Point, c color.Color) error {
+func (board *Board) CanMove(from, to matrix.Point, c color.Color) (bool, error) {
 	if matrix.InMatrix(from) == false || matrix.InMatrix(to) == false {
-		return errors.New("out of board")
+		return false, errors.New("out of board")
 	}
 
 	fsymbol := board.Matrix[from.Y][from.X]
@@ -96,7 +96,7 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 		diff = to.Diff(from)
 	}
 	if fcolor != c || tcolor == c {
-		return errors.New("cannot move pieces that is not yours")
+		return false, errors.New("cannot move pieces that is not yours")
 	}
 
 	fpiece := piece.WhichPiece(fsymbol)
@@ -104,7 +104,7 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 	canMove := fpiece.CanMove(diff, board.first[from.Y][from.X], toEnemy)
 	existBarrier := board.Matrix.ExistBarrier(from, to)
 	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
-		return errors.New("cannot move this piece to there")
+		return false, errors.New("cannot move this piece to there")
 	}
 
 	ffirst := board.first[from.Y][from.X]
@@ -113,8 +113,27 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 	isCastling := board.IsCastling(from, to)
 	canCastling := isCastling && board.CanCastling(from, to)
 	if isCastling && canCastling == false {
-		return errors.New("cannnot castle to that point")
+		return false, errors.New("cannnot castle to that point")
 	} else if canCastling == true {
+		board.Castling(from, to)
+	} else {
+		board.Move(from, to, false)
+	}
+
+	isChecked := board.IsChecked(c)
+	board.Matrix[from.Y][from.X] = fsymbol
+	board.Matrix[to.Y][to.X] = tsymbol
+	board.first[from.Y][from.X] = ffirst
+	board.first[to.Y][to.X] = tfirst
+	if isChecked {
+		return false, errors.New("cannot move that piece there: your king will be checked")
+	} else {
+		return true, nil
+	}
+}
+
+func (board *Board) Move(from, to matrix.Point, isCastling bool) {
+	if isCastling {
 		board.Castling(from, to)
 	} else {
 		board.Matrix[to.Y][to.X] = board.Matrix[from.Y][from.X]
@@ -122,13 +141,4 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 		board.first[from.Y][from.X] = false
 		board.first[to.Y][to.X] = false
 	}
-	if board.IsChecked(c) {
-		board.Matrix[from.Y][from.X] = fsymbol
-		board.Matrix[to.Y][to.X] = tsymbol
-		board.first[from.Y][from.X] = ffirst
-		board.first[to.Y][to.X] = tfirst
-		return errors.New("cannot move that piece there: your king will be checked")
-	}
-
-	return nil
 }
