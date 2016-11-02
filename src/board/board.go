@@ -24,6 +24,10 @@ func NewBoard() *Board {
 	return board
 }
 
+func (board Board) IsFirst(p matrix.Point) bool {
+	return board.first[p.Y][p.X]
+}
+
 func (board *Board) CanCastling(from, to matrix.Point) bool {
 	diff := from.Diff(to)
 	rfrom := from
