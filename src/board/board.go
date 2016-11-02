@@ -28,6 +28,12 @@ func (board Board) IsFirst(p matrix.Point) bool {
 	return board.first[p.Y][p.X]
 }
 
+func (board *Board) IsCastling(from, to matrix.Point) bool {
+	isKing := piece.King.IsSymbol(board.Matrix[from.Y][from.X])
+	diff := from.Diff(to)
+	return isKing && (diff == matrix.Point{0, 2} || diff == matrix.Point{0, -2})
+}
+
 func (board *Board) CanCastling(from, to matrix.Point) bool {
 	diff := from.Diff(to)
 	rfrom := from
@@ -104,7 +110,7 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 	ffirst := board.first[from.Y][from.X]
 	tfirst := board.first[to.Y][to.X]
 
-	isCastling := piece.King.IsSymbol(fsymbol) && (diff.X == -2 || diff.X == 2)
+	isCastling := board.IsCastling(from, to)
 	canCastling := isCastling && board.CanCastling(from, to)
 	if isCastling && canCastling == false {
 		return errors.New("cannnot castle to that point")
