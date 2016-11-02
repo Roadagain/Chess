@@ -33,9 +33,9 @@ func main() {
 			fmt.Println("Your king is checked")
 		}
 
+		var from, to matrix.Point
+		var err error
 		for success == false {
-			var from, to matrix.Point
-			var err error
 			if now == color.Black {
 				from, to = enemy.NewEnemy(chessboard, now).RandomizedSelect()
 			} else {
