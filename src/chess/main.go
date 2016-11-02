@@ -61,9 +61,12 @@ func main() {
 					to = move.ToPoint()
 				}
 			}
-			err = chessboard.Move(from, to, now)
-			success = err == nil
-			if success == false {
+			canMove, err := chessboard.CanMove(from, to, now)
+			success = canMove
+			if canMove {
+				success = true
+				chessboard.Move(from, to, chessboard.IsCastling(from, to))
+			} else {
 				fmt.Println(err)
 			}
 		}
