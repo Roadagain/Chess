@@ -5,6 +5,7 @@ import (
 	"color"
 	"enemy"
 	"fmt"
+	"io"
 	"matrix"
 )
 
@@ -40,16 +41,22 @@ func main() {
 			} else {
 				var move *matrix.Move
 				move, err = scanMove()
-				if err != nil {
+				if err == io.EOF {
 					finish = true
 					break
+				} else if err != nil {
+					fmt.Println(err)
+					continue
 				} else {
 					from = move.ToPoint()
 				}
 				move, err = scanMove()
-				if err != nil {
+				if err == io.EOF {
 					finish = true
 					break
+				} else if err != nil {
+					fmt.Println(err)
+					continue
 				} else {
 					to = move.ToPoint()
 				}
