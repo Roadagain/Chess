@@ -3,6 +3,7 @@ package main
 import (
 	"board"
 	"color"
+	"enemy"
 	"fmt"
 	"matrix"
 )
@@ -32,17 +33,28 @@ func main() {
 		}
 
 		for success == false {
-			from, err := scanMove()
-			if err != nil {
-				finish = true
-				break
+			var from, to matrix.Point
+			var err error
+			if now == color.Black {
+				from, to = enemy.NewEnemy(chessboard, now).RandomizedSelect()
+			} else {
+				var move *matrix.Move
+				move, err = scanMove()
+				if err != nil {
+					finish = true
+					break
+				} else {
+					from = move.ToPoint()
+				}
+				move, err = scanMove()
+				if err != nil {
+					finish = true
+					break
+				} else {
+					to = move.ToPoint()
+				}
 			}
-			to, err := scanMove()
-			if err != nil {
-				finish = true
-				break
-			}
-			err = chessboard.Move(from.ToPoint(), to.ToPoint(), now)
+			err = chessboard.Move(from, to, now)
 			success = err == nil
 			if success == false {
 				fmt.Println(err)
