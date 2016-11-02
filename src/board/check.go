@@ -10,7 +10,7 @@ func (board Board) IsChecked(c color.Color) bool {
 	var king matrix.Point
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
-			symbol := board.matrix[i][j]
+			symbol := board.Matrix[i][j]
 			if piece.King.IsSymbol(symbol) && color.WhichColor(symbol) == c {
 				king = matrix.Point{i, j}
 				break
@@ -20,7 +20,7 @@ func (board Board) IsChecked(c color.Color) bool {
 	enemy := c.Enemy()
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
-			symbol := board.matrix[i][j]
+			symbol := board.Matrix[i][j]
 			if color.WhichColor(symbol) != enemy {
 				continue
 			}
@@ -29,7 +29,7 @@ func (board Board) IsChecked(c color.Color) bool {
 			piece := piece.WhichPiece(symbol)
 			first := board.first[i][j]
 			diff := from.Diff(king)
-			if piece.CanMove(diff, first, true) && board.matrix.ExistBarrier(from, king) == false {
+			if piece.CanMove(diff, first, true) && board.Matrix.ExistBarrier(from, king) == false {
 				return true
 			}
 		}
@@ -45,7 +45,7 @@ func (board Board) IsCheckMate(c color.Color) bool {
 	friend := make([]matrix.Point, 16)
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
-			symbol := board.matrix[i][j]
+			symbol := board.Matrix[i][j]
 			if color.WhichColor(symbol) == c {
 				friend = append(friend, matrix.Point{i, j})
 			}
@@ -56,8 +56,8 @@ func (board Board) IsCheckMate(c color.Color) bool {
 		for j := 0; j < 8; j++ {
 			to := matrix.Point{i, j}
 			for _, k := range friend {
-				fsymbol := board.matrix[k.Y][k.X]
-				tsymbol := board.matrix[to.Y][to.X]
+				fsymbol := board.Matrix[k.Y][k.X]
+				tsymbol := board.Matrix[to.Y][to.X]
 				tcolor := color.WhichColor(tsymbol)
 				if tcolor == c || tcolor == color.Unknown {
 					continue
@@ -65,19 +65,23 @@ func (board Board) IsCheckMate(c color.Color) bool {
 
 				piece := piece.WhichPiece(fsymbol)
 				first := board.first[k.Y][k.X]
-				diff := k.Diff(to)
+				var diff matrix.Point
+				if c == color.White {
+					diff = k.Diff(to)
+				} else if c == color.Black {
+					diff = to.Diff(k)
+				}
 				toEnemy := color.WhichColor(tsymbol) == c.Enemy()
-				if piece.CanMove(diff, first, toEnemy) && board.matrix.ExistBarrier(k, to) == false {
-					board.matrix[to.Y][to.X] = fsymbol
-					board.matrix[k.Y][k.X] = ' '
+				if piece.CanMove(diff, first, toEnemy) && board.Matrix.ExistBarrier(k, to) == false {
+					board.Matrix[to.Y][to.X] = fsymbol
+					board.Matrix[k.Y][k.X] = ' '
 					if board.IsChecked(c) == false {
-						board.Print()
-						board.matrix[to.Y][to.X] = tsymbol
-						board.matrix[k.Y][k.X] = fsymbol
+						board.Matrix[to.Y][to.X] = tsymbol
+						board.Matrix[k.Y][k.X] = fsymbol
 						return false
 					}
-					board.matrix[to.Y][to.X] = tsymbol
-					board.matrix[k.Y][k.X] = fsymbol
+					board.Matrix[to.Y][to.X] = tsymbol
+					board.Matrix[k.Y][k.X] = fsymbol
 				}
 			}
 		}

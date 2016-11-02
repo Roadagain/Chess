@@ -8,13 +8,13 @@ import (
 )
 
 type Board struct {
-	matrix matrix.Matrix
-	first  [8][8]bool
+	matrix.Matrix
+	first [8][8]bool
 }
 
 func NewBoard() *Board {
 	board := new(Board)
-	board.matrix = matrix.Starting()
+	board.Matrix = matrix.Starting()
 	for i := 0; i < 8; i++ {
 		board.first[0][i] = true
 		board.first[1][i] = true
@@ -36,12 +36,12 @@ func (board *Board) CanCastling(from, to matrix.Point) bool {
 		rfrom.X = 0
 		rto.X = to.X + 1
 	}
-	fsymbol := board.matrix[rfrom.Y][rfrom.X]
+	fsymbol := board.Matrix[rfrom.Y][rfrom.X]
 	if piece.Rook.IsSymbol(fsymbol) == false {
 		return false
 	} else if board.first[rfrom.Y][rfrom.X] == false {
 		return false
-	} else if board.matrix.ExistBarrier(rfrom, rto) {
+	} else if board.Matrix.ExistBarrier(rfrom, rto) {
 		return false
 	}
 	return true
@@ -59,12 +59,12 @@ func (board *Board) Castling(from, to matrix.Point) {
 		rto.X = to.X + 1
 	}
 
-	board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
-	board.matrix[from.Y][from.X] = ' '
+	board.Matrix[to.Y][to.X] = board.Matrix[from.Y][from.X]
+	board.Matrix[from.Y][from.X] = ' '
 	board.first[from.Y][from.X] = false
 	board.first[to.Y][to.X] = false
-	board.matrix[rto.Y][rto.X] = board.matrix[rfrom.Y][rfrom.X]
-	board.matrix[rfrom.Y][rfrom.X] = ' '
+	board.Matrix[rto.Y][rto.X] = board.Matrix[rfrom.Y][rfrom.X]
+	board.Matrix[rfrom.Y][rfrom.X] = ' '
 	board.first[rfrom.Y][rfrom.X] = false
 	board.first[rto.Y][rto.X] = false
 }
@@ -74,11 +74,11 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 		return errors.New("out of board")
 	}
 
-	fsymbol := board.matrix[from.Y][from.X]
-	tsymbol := board.matrix[to.Y][to.X]
+	fsymbol := board.Matrix[from.Y][from.X]
+	tsymbol := board.Matrix[to.Y][to.X]
 
-	fcolor := color.WhichColor(board.matrix[from.Y][from.X])
-	tcolor := color.WhichColor(board.matrix[to.Y][to.X])
+	fcolor := color.WhichColor(board.Matrix[from.Y][from.X])
+	tcolor := color.WhichColor(board.Matrix[to.Y][to.X])
 	diff := matrix.Point{0, 0}
 	if fcolor == color.White {
 		diff = from.Diff(to)
@@ -90,9 +90,9 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 	}
 
 	fpiece := piece.WhichPiece(fsymbol)
-	toEnemy := color.WhichColor(board.matrix[to.Y][to.X]) == c.Enemy()
+	toEnemy := color.WhichColor(board.Matrix[to.Y][to.X]) == c.Enemy()
 	canMove := fpiece.CanMove(diff, board.first[from.Y][from.X], toEnemy)
-	existBarrier := board.matrix.ExistBarrier(from, to)
+	existBarrier := board.Matrix.ExistBarrier(from, to)
 	if canMove == false || (existBarrier && piece.Knight.IsSymbol(fsymbol) == false) {
 		return errors.New("cannot move this piece to there")
 	}
@@ -107,14 +107,14 @@ func (board *Board) Move(from, to matrix.Point, c color.Color) error {
 	} else if canCastling == true {
 		board.Castling(from, to)
 	} else {
-		board.matrix[to.Y][to.X] = board.matrix[from.Y][from.X]
-		board.matrix[from.Y][from.X] = ' '
+		board.Matrix[to.Y][to.X] = board.Matrix[from.Y][from.X]
+		board.Matrix[from.Y][from.X] = ' '
 		board.first[from.Y][from.X] = false
 		board.first[to.Y][to.X] = false
 	}
 	if board.IsChecked(c) {
-		board.matrix[from.Y][from.X] = fsymbol
-		board.matrix[to.Y][to.X] = tsymbol
+		board.Matrix[from.Y][from.X] = fsymbol
+		board.Matrix[to.Y][to.X] = tsymbol
 		board.first[from.Y][from.X] = ffirst
 		board.first[to.Y][to.X] = tfirst
 		return errors.New("cannot move that piece there: your king will be checked")

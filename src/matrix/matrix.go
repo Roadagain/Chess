@@ -1,5 +1,7 @@
 package matrix
 
+import "fmt"
+
 const SIDE = 8
 
 type Matrix [SIDE][SIDE]byte
@@ -33,4 +35,39 @@ func (mat Matrix) ExistBarrier(from, to Point) bool {
 		p.StepTo(to)
 	}
 	return false
+}
+
+func (mat Matrix) ToString() string {
+	matBytes := make([]byte, (SIDE*2+3)*(SIDE*2+4))
+	matBytes = append(matBytes, " "...)
+	//matBytes := " "
+	for i := 0; i < SIDE; i++ {
+		matBytes = append(matBytes, fmt.Sprintf(" %c", 'a'+i)...)
+	}
+	matBytes = append(matBytes, "\n"...)
+
+	for i := 0; i < SIDE; i++ {
+		matBytes = append(matBytes, " +"...)
+		for i := 0; i < SIDE; i++ {
+			matBytes = append(matBytes, "-+"...)
+		}
+		matBytes = append(matBytes, "\n"...)
+		matBytes = append(matBytes, fmt.Sprintf("%d|", SIDE-i)...)
+		for j := 0; j < SIDE; j++ {
+			matBytes = append(matBytes, fmt.Sprintf("%c|", mat[i][j])...)
+		}
+		matBytes = append(matBytes, fmt.Sprintf("%d\n", SIDE-i)...)
+	}
+	matBytes = append(matBytes, " +"...)
+	for i := 0; i < SIDE; i++ {
+		matBytes = append(matBytes, "-+"...)
+	}
+	matBytes = append(matBytes, "\n"...)
+
+	matBytes = append(matBytes, " "...)
+	for i := 0; i < SIDE; i++ {
+		matBytes = append(matBytes, fmt.Sprintf(" %c", 'a'+i)...)
+	}
+
+	return string(matBytes)
 }
