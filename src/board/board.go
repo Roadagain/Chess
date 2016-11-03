@@ -142,3 +142,9 @@ func (board *Board) Move(from, to matrix.Point, isCastling bool) {
 		board.first[to.Y][to.X] = false
 	}
 }
+
+func (board *Board) Promotion(pawn matrix.Point, choice piece.Piece, c color.Color) {
+	if matrix.IsDeepest(pawn, c) && piece.CanPromotionTo(choice) {
+		board.Matrix[pawn.Y][pawn.X] = choice.Symbol(c)
+	}
+}

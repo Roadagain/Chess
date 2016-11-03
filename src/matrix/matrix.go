@@ -87,3 +87,7 @@ func (mat Matrix) Positions(c color.Color) []Point {
 
 	return positions
 }
+
+func IsDeepest(point Point, c color.Color) bool {
+	return (c == color.White && point.Y == 0) || (c == color.Black && point.Y == SIDE-1)
+}

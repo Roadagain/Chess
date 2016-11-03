@@ -1,6 +1,9 @@
 package piece
 
-import "matrix"
+import (
+	"color"
+	"matrix"
+)
 
 type Piece struct {
 	movable      []matrix.Point
@@ -60,4 +63,19 @@ func WhichPiece(symbol byte) Piece {
 	default:
 		return Empty
 	}
+}
+
+func (piece Piece) Symbol(c color.Color) byte {
+	if c == color.White {
+		return piece.white
+	} else if c == color.Black {
+		return piece.black
+	} else {
+		return ' '
+	}
+}
+
+func CanPromotionTo(piece Piece) bool {
+	symbol := piece.Symbol(color.White)
+	return (Empty.IsSymbol(symbol) || Pawn.IsSymbol(symbol) || King.IsSymbol(symbol)) == false
 }
