@@ -1,6 +1,9 @@
 package piece
 
-import "matrix"
+import (
+	"color"
+	"matrix"
+)
 
 type Piece struct {
 	movable      []matrix.Point
@@ -59,5 +62,15 @@ func WhichPiece(symbol byte) Piece {
 		return Rook
 	default:
 		return Empty
+	}
+}
+
+func (piece Piece) Symbol(c color.Color) byte {
+	if c == color.White {
+		return piece.white
+	} else if c == color.Black {
+		return piece.black
+	} else {
+		return ' '
 	}
 }
