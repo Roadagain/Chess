@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"matrix"
+	"os"
 )
 
 func scanMove() (*matrix.Move, error) {
@@ -18,6 +19,16 @@ func scanMove() (*matrix.Move, error) {
 }
 
 func main() {
+	var player color.Color
+	if len(os.Args) == 1 {
+		player = color.White
+	} else {
+		player = color.ParseColor(os.Args[1])
+		if player == color.Unknown {
+			fmt.Printf("Invalid color: %s\n", os.Args[1])
+			return
+		}
+	}
 	chessboard := board.NewBoard()
 	finish := false
 	now := color.White
@@ -36,7 +47,7 @@ func main() {
 		var from, to matrix.Point
 		var err error
 		for success == false {
-			if now == color.Black {
+			if now != player {
 				from, to = enemy.NewEnemy(chessboard, now).RandomizedSelect()
 			} else {
 				var move *matrix.Move
