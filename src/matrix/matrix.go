@@ -1,6 +1,9 @@
 package matrix
 
-import "fmt"
+import (
+	"color"
+	"fmt"
+)
 
 const SIDE = 8
 
@@ -38,7 +41,7 @@ func (mat Matrix) ExistBarrier(from, to Point) bool {
 }
 
 func (mat Matrix) ToString() string {
-	matBytes := make([]byte, (SIDE*2+3)*(SIDE*2+4))
+	matBytes := make([]byte, 0)
 	matBytes = append(matBytes, " "...)
 	//matBytes := " "
 	for i := 0; i < SIDE; i++ {
@@ -70,4 +73,17 @@ func (mat Matrix) ToString() string {
 	}
 
 	return string(matBytes)
+}
+
+func (mat Matrix) Positions(c color.Color) []Point {
+	positions := make([]Point, 0)
+	for i := 0; i < SIDE; i++ {
+		for j := 0; j < SIDE; j++ {
+			if color.WhichColor(mat[i][j]) == c {
+				positions = append(positions, Point{i, j})
+			}
+		}
+	}
+
+	return positions
 }

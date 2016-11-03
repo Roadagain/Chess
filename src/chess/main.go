@@ -3,8 +3,11 @@ package main
 import (
 	"board"
 	"color"
+	"enemy"
 	"fmt"
+	"io"
 	"matrix"
+	"os"
 )
 
 func scanMove() (*matrix.Move, error) {
@@ -16,6 +19,16 @@ func scanMove() (*matrix.Move, error) {
 }
 
 func main() {
+	var player color.Color
+	if len(os.Args) == 1 {
+		player = color.White
+	} else {
+		player = color.ParseColor(os.Args[1])
+		if player == color.Unknown {
+			fmt.Printf("Invalid color: %s\n", os.Args[1])
+			return
+		}
+	}
 	chessboard := board.NewBoard()
 	finish := false
 	now := color.White
@@ -31,20 +44,41 @@ func main() {
 			fmt.Println("Your king is checked")
 		}
 
+		var from, to matrix.Point
+		var err error
 		for success == false {
-			from, err := scanMove()
-			if err != nil {
-				finish = true
-				break
+			if now != player {
+				from, to = enemy.NewEnemy(chessboard, now).RandomizedSelect()
+				fmt.Printf("%c%d %c%d\n", byte(from.X+'a'), 8-from.Y, byte(to.X+'a'), 8-to.Y)
+			} else {
+				var move *matrix.Move
+				move, err = scanMove()
+				if err == io.EOF {
+					finish = true
+					break
+				} else if err != nil {
+					fmt.Println(err)
+					continue
+				} else {
+					from = move.ToPoint()
+				}
+				move, err = scanMove()
+				if err == io.EOF {
+					finish = true
+					break
+				} else if err != nil {
+					fmt.Println(err)
+					continue
+				} else {
+					to = move.ToPoint()
+				}
 			}
-			to, err := scanMove()
-			if err != nil {
-				finish = true
-				break
-			}
-			err = chessboard.Move(from.ToPoint(), to.ToPoint(), now)
-			success = err == nil
-			if success == false {
+			canMove, err := chessboard.CanMove(from, to, now)
+			success = canMove
+			if canMove {
+				success = true
+				chessboard.Move(from, to, chessboard.IsCastling(from, to))
+			} else {
 				fmt.Println(err)
 			}
 		}
