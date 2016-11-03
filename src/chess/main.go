@@ -85,7 +85,7 @@ func main() {
 					var choice string
 					fmt.Scan(&choice)
 					p := piece.WhichPiece([]byte(choice)[0])
-					for piece.Empty.IsSymbol(p.Symbol(now)) || piece.Pawn.IsSymbol(p.Symbol(now)) {
+					for piece.CanPromotionTo(p) == false {
 						fmt.Println("Invalid symbol")
 						fmt.Print("Promotion: ")
 						fmt.Scan(&choice)
