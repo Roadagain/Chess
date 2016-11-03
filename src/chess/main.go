@@ -83,7 +83,13 @@ func main() {
 				if isPawn && matrix.IsDeepest(to, now) {
 					fmt.Print("Promotion: ")
 					var choice string
-					fmt.Scan(&choice)
+					if now == player {
+						fmt.Scan(&choice)
+					} else {
+						choice = "Queen"
+						fmt.Println(choice)
+					}
+
 					p := piece.WhichPiece([]byte(choice)[0])
 					for piece.CanPromotionTo(p) == false {
 						fmt.Println("Invalid symbol")
