@@ -8,6 +8,7 @@ import (
 	"io"
 	"matrix"
 	"os"
+	"piece"
 )
 
 func scanMove() (*matrix.Move, error) {
@@ -78,6 +79,20 @@ func main() {
 			if canMove {
 				success = true
 				chessboard.Move(from, to, chessboard.IsCastling(from, to))
+				isPawn := piece.Pawn.IsSymbol(chessboard.Matrix[to.Y][to.X])
+				if isPawn && matrix.IsDeepest(to, now) {
+					fmt.Print("Promotion: ")
+					var choice string
+					fmt.Scan(&choice)
+					p := piece.WhichPiece([]byte(choice)[0])
+					for piece.Empty.IsSymbol(p.Symbol(now)) || piece.Pawn.IsSymbol(p.Symbol(now)) {
+						fmt.Println("Invalid symbol")
+						fmt.Print("Promotion: ")
+						fmt.Scan(&choice)
+						p = piece.WhichPiece([]byte(choice)[0])
+					}
+					chessboard.Promotion(to, p, now)
+				}
 			} else {
 				fmt.Println(err)
 			}
