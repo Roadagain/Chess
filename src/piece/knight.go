@@ -18,5 +18,6 @@ func init() {
 		movable: knightMovable,
 		white:   'N',
 		black:   'n',
+		score:   3,
 	}
 }

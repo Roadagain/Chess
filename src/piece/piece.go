@@ -11,6 +11,7 @@ type Piece struct {
 	enemyMovable []matrix.Point
 	white        byte
 	black        byte
+	score        int
 }
 
 func NewPiece(movable, firstMovable, enemyMovable []matrix.Point, white, black byte) *Piece {

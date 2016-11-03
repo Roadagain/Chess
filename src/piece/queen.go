@@ -22,5 +22,6 @@ func init() {
 		movable: queenMovable,
 		white:   'Q',
 		black:   'q',
+		score:   9,
 	}
 }

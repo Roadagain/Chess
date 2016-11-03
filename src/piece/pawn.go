@@ -20,5 +20,6 @@ func init() {
 		enemyMovable: pawnEnemyMovable,
 		white:        'P',
 		black:        'p',
+		score:        1,
 	}
 }
