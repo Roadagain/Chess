@@ -1,5 +1,7 @@
 package color
 
+import "strings"
+
 type Color int
 
 const (
@@ -41,6 +43,19 @@ func WhichColor(c byte) Color {
 	} else if c == ' ' {
 		return Empty
 	} else {
+		return Unknown
+	}
+}
+
+func ParseColor(s string) Color {
+	switch strings.ToLower(s) {
+	case "white":
+		return White
+	case "black":
+		return Black
+	case "empty":
+		return Empty
+	default:
 		return Unknown
 	}
 }
