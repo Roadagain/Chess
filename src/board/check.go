@@ -21,10 +21,18 @@ func (board Board) IsChecked(c color.Color) bool {
 	enemies := board.Matrix.Positions(enemy)
 	for _, i := range enemies {
 		symbol := board.Matrix[i.Y][i.X]
-		piece := piece.WhichPiece(symbol)
+		p := piece.WhichPiece(symbol)
 		first := board.first[i.Y][i.X]
-		diff := i.Diff(king)
-		if piece.CanMove(diff, first, true) && board.Matrix.ExistBarrier(i, king) == false {
+		var diff matrix.Point
+		if c == color.White {
+			diff = i.Diff(king)
+		} else {
+			diff = king.Diff(i)
+		}
+
+		canMove := p.CanMove(diff, first, true)
+		existBarrier := board.Matrix.ExistBarrier(i, king)
+		if canMove && (piece.Knight.IsSymbol(symbol) || existBarrier == false) {
 			return true
 		}
 	}
