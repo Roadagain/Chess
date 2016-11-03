@@ -41,7 +41,7 @@ func (mat Matrix) ExistBarrier(from, to Point) bool {
 }
 
 func (mat Matrix) ToString() string {
-	matBytes := make([]byte, (SIDE*2+3)*(SIDE*2+4))
+	matBytes := make([]byte, 0)
 	matBytes = append(matBytes, " "...)
 	//matBytes := " "
 	for i := 0; i < SIDE; i++ {
