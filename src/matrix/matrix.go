@@ -76,7 +76,7 @@ func (mat Matrix) ToString() string {
 }
 
 func (mat Matrix) Positions(c color.Color) []Point {
-	positions := make([]Point, SIDE*SIDE)
+	positions := make([]Point, 0)
 	for i := 0; i < SIDE; i++ {
 		for j := 0; j < SIDE; j++ {
 			if color.WhichColor(mat[i][j]) == c {
