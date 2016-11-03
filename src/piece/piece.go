@@ -76,6 +76,10 @@ func (piece Piece) Symbol(c color.Color) byte {
 	}
 }
 
+func (piece Piece) Score() int {
+	return piece.score
+}
+
 func CanPromotionTo(piece Piece) bool {
 	symbol := piece.Symbol(color.White)
 	return (Empty.IsSymbol(symbol) || Pawn.IsSymbol(symbol) || King.IsSymbol(symbol)) == false
