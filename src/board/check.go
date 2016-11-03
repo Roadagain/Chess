@@ -24,7 +24,7 @@ func (board Board) IsChecked(c color.Color) bool {
 		p := piece.WhichPiece(symbol)
 		first := board.first[i.Y][i.X]
 		var diff matrix.Point
-		if c == color.White {
+		if enemy == color.White {
 			diff = i.Diff(king)
 		} else {
 			diff = king.Diff(i)
