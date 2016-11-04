@@ -60,7 +60,13 @@ func main() {
 		var err error
 		for success == false {
 			if now != player {
-				from, to = enemy.NewEnemy(chessboard, now).RandomizedSelect()
+				ene := enemy.NewEnemy(chessboard, now)
+				switch enemyType {
+				case enemy.Brutal:
+					from, to = ene.BrutalSelect()
+				default:
+					from, to = ene.RandomizedSelect()
+				}
 				fmt.Printf("%c%d %c%d\n", byte(from.X+'a'), 8-from.Y, byte(to.X+'a'), 8-to.Y)
 			} else {
 				var move *matrix.Move
