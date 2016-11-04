@@ -11,6 +11,7 @@ type Piece struct {
 	enemyMovable []matrix.Point
 	white        byte
 	black        byte
+	score        int
 }
 
 func NewPiece(movable, firstMovable, enemyMovable []matrix.Point, white, black byte) *Piece {
@@ -73,6 +74,10 @@ func (piece Piece) Symbol(c color.Color) byte {
 	} else {
 		return ' '
 	}
+}
+
+func (piece Piece) Score() int {
+	return piece.score
 }
 
 func CanPromotionTo(piece Piece) bool {

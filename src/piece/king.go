@@ -24,5 +24,6 @@ func init() {
 		firstMovable: kingFirstMovable,
 		white:        'K',
 		black:        'k',
+		score:        10,
 	}
 }

@@ -4,10 +4,10 @@ import (
 	"board"
 	"color"
 	"enemy"
+	"flag"
 	"fmt"
 	"io"
 	"matrix"
-	"os"
 	"piece"
 )
 
@@ -20,16 +20,27 @@ func scanMove() (*matrix.Move, error) {
 }
 
 func main() {
+	enemyFlag := flag.String("enemy", "random", "Enemy")
+	flag.Parse()
+
+	enemyType := enemy.ParseType(*enemyFlag)
+	if enemyType == enemy.Unknown {
+		fmt.Printf("Invalid enemy: %s\n", *enemyFlag)
+		return
+	}
+
 	var player color.Color
-	if len(os.Args) == 1 {
+	args := flag.Args()
+	if len(args) == 0 {
 		player = color.White
 	} else {
-		player = color.ParseColor(os.Args[1])
+		player = color.ParseColor(args[1])
 		if player == color.Unknown {
-			fmt.Printf("Invalid color: %s\n", os.Args[1])
+			fmt.Printf("Invalid color: %s\n", args[1])
 			return
 		}
 	}
+
 	chessboard := board.NewBoard()
 	finish := false
 	now := color.White
@@ -49,7 +60,13 @@ func main() {
 		var err error
 		for success == false {
 			if now != player {
-				from, to = enemy.NewEnemy(chessboard, now).RandomizedSelect()
+				ene := enemy.NewEnemy(chessboard, now)
+				switch enemyType {
+				case enemy.Brutal:
+					from, to = ene.BrutalSelect()
+				default:
+					from, to = ene.RandomizedSelect()
+				}
 				fmt.Printf("%c%d %c%d\n", byte(from.X+'a'), 8-from.Y, byte(to.X+'a'), 8-to.Y)
 			} else {
 				var move *matrix.Move

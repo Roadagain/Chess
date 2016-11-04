@@ -18,5 +18,6 @@ func init() {
 		movable: rookMovable,
 		white:   'R',
 		black:   'r',
+		score:   5,
 	}
 }

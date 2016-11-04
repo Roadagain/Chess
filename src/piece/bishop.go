@@ -18,5 +18,6 @@ func init() {
 		movable: bishopMovable,
 		white:   'B',
 		black:   'b',
+		score:   3,
 	}
 }
